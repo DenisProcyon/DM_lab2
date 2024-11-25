@@ -116,7 +116,7 @@ class PostgresORM:
     
     def __fill_seat_classes(self, fillings: int) -> bool:
         try:
-            rows = range(1, 2)
+            rows = range(1, 42)
             seat_letters = ["A", "B", "C", "D", "E", "F"]
 
             for row in rows:
@@ -251,7 +251,7 @@ class PostgresORM:
             for _ in range(fillings):
                 aircraft_type = self.faker.random.choice(['Boeing 737', 'Airbus A320', 'Boeing 777', 'Airbus A350'])
                 aircraft_company = f'{self.faker.company()}'
-                aircraft_capacity = 300 #self.faker.random.randint(100, 400)
+                aircraft_capacity = 300 
 
                 self.cursor.execute(
                     f'INSERT INTO {self.schema_name}.aircrafts (aircraft_type, aircraft_company, aircraft_capacity) VALUES (%s, %s, %s)',
@@ -303,7 +303,7 @@ class PostgresORM:
                 slot_scheduled = self.faker.random.choice(scheduled_statuses)
 
                 start_time = self.faker.date_time_between(start_date="-1y", end_date="now")
-                end_time = start_time + self.faker.random_element(elements=[timedelta(hours=h) for h in range(1, 13)])  # Добавляем от 1 до 12 часов
+                end_time = start_time + self.faker.random_element(elements=[timedelta(hours=h) for h in range(1, 13)])
 
                 self.cursor.execute(
                     f"INSERT INTO {self.schema_name}.aircraft_slots (aircraft_registration_number, slot_start, slot_end, slot_type, slot_scheduled, maintenance_id) VALUES (%s, %s, %s, %s, %s, %s)",
@@ -732,7 +732,6 @@ class PostgresORM:
                 (maintenance_id,)
             )
             
-            # Извлечение результата
             result = self.cursor.fetchone()
             if result:
                 return result[0].strftime("%Y-%m-%d") 
