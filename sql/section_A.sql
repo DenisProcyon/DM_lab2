@@ -84,33 +84,23 @@ ORDER BY
     
 -- Q4: Find flights departing in the next 7 days operated by a specific aircraft model but not yet fully booked
 SELECT 
-    f.flight_number,                                          -- Flight number
-    fd.scheduled_departure_date,                             -- Scheduled departure date
-    fd.scheduled_departure_time,                             -- Scheduled departure time
-    a.aircraft_type,                                         -- Aircraft type
-    COUNT(CASE WHEN s.seat_status != 'Booked' THEN 1 END) AS available_seats -- Count available seats
+    fd.flight_number,
+    fd.scheduled_departure_date, 
+    fd.scheduled_departure_time, 
+    a.aircraft_type,
+    fd.available_seating
 FROM 
     airport_lab.flight_data fd
 JOIN 
-    airport_lab.flights f 
-    ON fd.flight_number = f.flight_number                   -- Joining flight data and flights
-JOIN 
     airport_lab.aircrafts a 
-    ON fd.aircraft_registration_number = a.aircraft_registration_number -- Joining flight data and aircrafts
-JOIN 
-    airport_lab.seats s 
-    ON CAST(s.flight_id AS VARCHAR) = f.flight_number       -- Joining flights and seats by flight ID
+    ON fd.aircraft_registration_number = a.aircraft_registration_number -- join flight data and aircrafts
 WHERE 
-    fd.scheduled_departure_date BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days' -- Next 7 days
-    AND a.aircraft_type = 'Airbus A350'                     -- Filter for specific aircraft type
-GROUP BY 
-    f.flight_number, fd.scheduled_departure_date, fd.scheduled_departure_time, a.aircraft_type
-HAVING 
-    COUNT(CASE WHEN s.seat_status != 'Booked' THEN 1 END) > 0 -- Ensure at least one available seat
+    fd.scheduled_departure_date BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days' -- Flights in the next 7 days
+    AND a.aircraft_type = 'Airbus A320'                     -- Filter for Airbus A320
+    AND fd.available_seating > 0                            -- Ensure there are available seats
 ORDER BY 
     fd.scheduled_departure_date, fd.scheduled_departure_time; -- Order by departure date and time
-       
-    
+ 
 -- Q5: Generate a report of flights where maintenance schedules conflict with assigned aircraft
 SELECT 
     fd.flight_id,                                             -- Flight ID
