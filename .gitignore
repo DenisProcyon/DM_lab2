@@ -1,1 +1,4 @@
 *.pyc
+*.erd
+*.graphml
+*.bmp

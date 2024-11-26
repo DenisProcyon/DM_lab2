@@ -226,3 +226,12 @@ CREATE TABLE airport_lab.customer_feedback_and_survey
     CONSTRAINT fk_customer_references_customer_id 
         FOREIGN KEY (customer_id) REFERENCES airport_lab.customers(customer_id)
 );
+
+DROP TABLE IF EXISTS airport_lab.feedback_archive;
+CREATE TABLE airport_lab.feedback_archive (
+	customer_id INT NOT NULL,
+    CONSTRAINT fk_customer_id
+        FOREIGN KEY (customer_id) REFERENCES airport_lab.customers (customer_id),
+    customer_feedback_and_survey_data JSONB NOT NULL,
+    archived_at TIMESTAMP DEFAULT NOW()
+);
