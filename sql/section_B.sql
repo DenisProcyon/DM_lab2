@@ -1,4 +1,15 @@
 -- JQ1
+/*
+To find customers who prefer extra legroom and have submitted feedback with
+a service rating lower than 3, we need to implement a query that, firstly,
+extracts json data from customer_preferneces_data table as well as from
+customer_feedback_and_survey table and secondly, joins customers table,
+preferences table and feedback table on ID of a customer. Then, we need to
+provide a condition to filter the result by value from extra_legroom field and
+service field respectively for two tables stated above.
+
+*/
+ 
 SELECT 
     c.customer_id,
     c.name,
@@ -13,6 +24,13 @@ WHERE
     AND (cf.customer_feedback_and_survey_data->'topics'->>'service')::int < 3; -- filter for less than 3
    
 -- JQ2
+/*
+To implement this query, we need firstly, to get all the ME that happened in last 6 month (using INTERVAL).
+Secondly, we will join this retrieved table with flight_data on column of aircraft_registration_number.
+After, by flught_id got from flight_data table we will join it with customer feedback table
+on a column of flight_id and get those (since task itself does not state it) with those feedbacks 
+that have rating lower than 3 and show flight, its problem and the data from customer feedback
+*/
 WITH recent_maintenance_issues AS (
     -- retrieve maintenance events within the last 6 months
     SELECT 
@@ -62,6 +80,13 @@ ORDER BY
     scheduled_departure_date DESC; --  most recent flights
 
 -- JQ3
+/*
+The implementation of this query can be compared with JQ1. First, we need to
+join three tabled by customer_id field for 3 tables, being customers, customer_preferences
+and customer_feedback_and_survey. After, we need to get those customers
+who are not in customer_feedback_and_survey table and in the same time in
+customer_preferences_data table with specific value in meal field. 
+*/
 SELECT 
     c.customer_id,
     c.name,
@@ -78,6 +103,12 @@ WHERE cfs.customer_id IS NULL -- filters no feedback
 
 
 -- JQ4
+/*
+To implement this query, we need to firstlt get all the feeback with a rating of 5,
+secondly, to get the preferences of those 5 star rating customer and join them by customer id.
+Then, we will use COUNT() finction on their meal prederence (since it is not INTEGER) and sum up all the 
+prefernces wich are integer.
+*/
 WITH five_star_feedback AS (
     SELECT 
         cfs.customer_id,
