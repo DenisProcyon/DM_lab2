@@ -21,7 +21,7 @@ This project implements schema population for a PostgreSQL database using the `P
 ```python
 from postgres_orm import PostgresORM
 
-# Credentials for database connection
+# Credentials for database connection (proveided in google classroom)
 HOST = "<host>"
 PORT = "<port>"
 USERNAME = "<username>"
@@ -44,7 +44,7 @@ filling_order = (
     "table_1",
     "table_2",
     ...,
-    "table_n"
+    "table_n",
 )
 
 # Populate each table in the specified order
