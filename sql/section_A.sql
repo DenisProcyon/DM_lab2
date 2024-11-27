@@ -211,15 +211,15 @@ ORDER BY
     
 -- Q10: Get the total bookings and revenue generated per month
 SELECT
-    DATE_TRUNC('month', b.booking_date_and_time) AS booking_month, -- Group by booking month
-    COUNT(b.booking_id) AS total_bookings,                        -- Total number of bookings
-    SUM(b.price) AS total_revenue                                 -- Total revenue generated
+    TO_CHAR(DATE_TRUNC('month', b.booking_date_and_time), 'Month') AS booking_month_name, -- Название месяца
+    COUNT(b.booking_id) AS total_bookings,                                                -- Общее количество бронирований
+    SUM(b.price) AS total_revenue                                                         -- Общий доход
 FROM 
     airport_lab.bookings b
 GROUP BY 
-    booking_month
+    booking_month_name
 ORDER BY 
-    booking_month;                                               -- Order by booking month
+    MIN(b.booking_date_and_time);                                                         -- Упорядочить по оригинальной дате
 
     
     

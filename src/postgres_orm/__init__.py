@@ -116,7 +116,7 @@ class PostgresORM:
     
     def __fill_seat_classes(self, fillings: int) -> bool:
         try:
-            rows = range(1, 41)
+            rows = range(1, 2)
             seat_letters = ["A", "B", "C", "D", "E", "F"]
 
             for row in rows:

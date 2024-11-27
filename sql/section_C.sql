@@ -59,13 +59,6 @@ INSERT INTO airport_lab.flight_data (
 DROP TRIGGER IF EXISTS archive_old_feedback_trigger ON airport_lab.customer_feedback_and_survey;
 DROP FUNCTION IF EXISTS archive_old_feedback;
 
-DROP TABLE IF EXISTS airport_lab.feedback_archive CASCADE;
-CREATE TABLE airport_lab.feedback_archive (
-    customer_id INT NOT NULL,
-    customer_feedback_and_survey_data JSONB NOT NULL,
-    archived_at TIMESTAMP DEFAULT NOW()
-);
-
 -- creating function 
 CREATE OR REPLACE FUNCTION archive_old_feedback()
 RETURNS TRIGGER AS $$
