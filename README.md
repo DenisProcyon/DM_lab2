@@ -50,4 +50,3 @@ filling_order = (
 # Populate each table in the specified order
 for table in filling_order:
     result = orm.fill_table(table=table, fillings=100)
-    print(f"Table '{table}' populated with {result} entries.")
