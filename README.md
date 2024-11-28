@@ -14,8 +14,8 @@ This project implements schema population for a PostgreSQL database using the `P
 ## Usage
 
 ### Prerequisites
-1. Ensure you have the PostgreSQL database set up with the appropriate schema.
-2. Use the credentials provided in Google Classroom for connecting to the database.
+1. Set up a schema.
+2. Credentials provided in Google Classroom.
 
 ### Example Code
 ```python
